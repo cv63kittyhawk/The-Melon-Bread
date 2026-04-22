@@ -63,7 +63,7 @@
     }
 
     .app {
-      width: min(100%, 760px);
+      width: min(100%, 920px);
       background: var(--panel);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
@@ -121,6 +121,7 @@
     }
 
     .mini-btn:hover { transform: translateY(-1px); }
+
     .mini-btn.active {
       background: color-mix(in srgb, var(--accent) 14%, white 86%);
       border-color: color-mix(in srgb, var(--accent) 36%, white 64%);
@@ -155,13 +156,52 @@
       background: white;
     }
 
-    .ja-logo-text {
-      font-family: var(--font-display);
-      font-size: clamp(34px, 6vw, 52px);
-      line-height: 1;
-      margin: 10px 0 6px;
-      color: var(--accent);
-      letter-spacing: .08em;
+    .world-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+      margin-top: 22px;
+      align-items: stretch;
+    }
+
+    .world-card {
+      width: 100%;
+      text-align: left;
+      background: rgba(255,255,255,.85);
+      color: var(--text);
+      padding: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(0,0,0,.07);
+      box-shadow: 0 8px 18px rgba(0,0,0,.04);
+      cursor: pointer;
+      transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+
+    .world-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(0,0,0,.06);
+      border-color: color-mix(in srgb, var(--accent) 18%, rgba(0,0,0,.07) 82%);
+    }
+
+    .world-preview {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 250px;
+      border-radius: 18px;
+      margin-bottom: 14px;
+      padding: 16px;
+      background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.55));
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.04);
+    }
+
+    .world-preview img {
+      width: 100%;
+      max-width: 240px;
+      display: block;
+      margin: 0 auto;
+      border-radius: 16px;
+      box-shadow: 0 8px 18px rgba(0,0,0,.06);
     }
 
     .title {
@@ -173,7 +213,7 @@
 
     .subtitle {
       margin: 0 auto;
-      max-width: 560px;
+      max-width: 640px;
       color: var(--muted);
       font-size: 15px;
       line-height: 1.8;
@@ -228,7 +268,7 @@
       line-height: 1.6;
     }
 
-    .choice-btn .label {
+    .choice-btn .label, .world-card .label {
       font-weight: 700;
       display: block;
       margin-bottom: 3px;
@@ -297,6 +337,8 @@
       .topbar { flex-direction: column; align-items: stretch; }
       .lang-switch { justify-content: center; }
       .badge { justify-content: center; }
+      .world-grid { grid-template-columns: 1fr; }
+      .world-preview { min-height: 220px; }
     }
   </style>
 </head>
@@ -313,7 +355,8 @@
   </div>
 
   <script>
-    const LOGO_DATA = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA4QAAAOECAYAAAD5Tv87AAAACXBIWXMAAAsSAAALEgHS3X78AAAgAElEQVR4nO3df5BV9Z3/8dfMzd0g2GGDkA5bqKQFEx8yYh9Gaiw2w0qkUpY4g0K0iEwV5UQ0S6XQ2aikcNq1S2wQ3Zb1A1cZ1lmpWz0Q7Yg1T4bU2rCk0cTQsyS0GZrjYxVQ4QmQ2kKQv7x9x/f+6u9u7f3vO9z7n3mXvP8z7f4z3f+fGf5zvP+TnPec4REREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREdHj6k5d1+8B8m8r6v7z5X2sLw2w1bNnT0qzv5S6bR2v5h2v1pKX9s1v0QwQm8J9V4Y1c7x2Hh9m8j3m9h7C6r3f6Yf3+6w0y9e3bN7b7vM7mQq6z7x7Fz7k2nN4r1nT3S5S3dS9T3m8q7y3sT4bF5m0s5JfQv1xv0D1x8Q7vRr3g0s7s3l8y7L6b9t4k5s7cY8m5m7r2v6e5Y5b8e7m1b5b7n2a7t5d6v9Y7o7y9e6y4N9HjW4d5Y9J2xX8Qk9P6bR4X6b9M7n1o8V4L+R2W9c5b6d7E5n8o6d7k8c6a5b7j8f7e8g5d9c7P7c8S+u6h7a8Y5b9Y4i8i8vQ0dERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERERET0H7lXyP7u5u0m7n9m8u8R3d1n7X9P3vYb6m8a9j7N6m8R5Y8n6f8k6q8Q5U8k6X8R5T8j6W8Q5S8i6V8R5R8h6U8Q5Q8g6T8R5P8f6S8Q5O8e6R8R5N8d6Q8Q5M8c6P8R5L8b6O8Q5K8a6N8R5J8Z6M8Q5I8Y6L8R5H8X6K8Q5G8W6J8R5F8V6I8Q5E8U6H8R5D8T6G8Q5C8S6F8R5B8R6E8Q5A8Q6D8R49P0iIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIqL/0v8A8B3Cw0n1c5AAAAAASUVORK5CYII=";
+    const LOGO_EN = "./assets/logo-en.png";
+    const LOGO_JA = "./assets/logo-ja.png";
 
     const i18n = {
       en: {
@@ -324,9 +367,7 @@
         worldEnDesc: "A bright American retro-futuristic interface with a slightly ironic commercial tone.",
         worldJa: "Soft Yuru Edition",
         worldJaDesc: "A gentle Japanese interface with a loose and playful atmosphere.",
-        continue: "Continue",
         back: "Back",
-        title: "The Melon Bread",
         heading: "The genius who didn’t know melon bread",
         subtitle: "A tiny branching story about misunderstanding, innovation, and the labels people attach after the result.",
         start: "Start Game",
@@ -402,9 +443,7 @@
         worldEnDesc: "アメリカの昔の広告っぽい、ちょっと皮肉な雰囲気のUIです。",
         worldJa: "ゆるUI版",
         worldJaDesc: "やさしくて少し脱力した、日本語向けのゆるい画面です。",
-        continue: "つづける",
         back: "もどる",
-        title: "めろんぱん",
         heading: "メロンパンをしらない天才",
         subtitle: "ちいさなすれ違いが、ヒットにも炎上にもなる。そんな分岐のおはなしです。",
         start: "はじめる",
@@ -522,12 +561,18 @@
           <div class="scene-tag">WORLD SELECT</div>
           <h1 class="title">${copy.worldTitle}</h1>
           <p class="subtitle">${copy.worldSub}</p>
-          <div class="choices">
-            <button class="choice-btn" onclick="pickWorld('en')">
+          <div class="world-grid">
+            <button class="world-card" onclick="pickWorld('en')">
+              <div class="world-preview">
+                <img src="${LOGO_EN}" alt="The Melon Bread English logo">
+              </div>
               <span class="label">🇺🇸 ${copy.worldEn}</span>
               <span>${copy.worldEnDesc}</span>
             </button>
-            <button class="choice-btn" onclick="pickWorld('ja')">
+            <button class="world-card" onclick="pickWorld('ja')">
+              <div class="world-preview">
+                <img src="${LOGO_JA}" alt="めろんぱん 日本語ロゴ">
+              </div>
               <span class="label">🇯🇵 ${copy.worldJa}</span>
               <span>${copy.worldJaDesc}</span>
             </button>
@@ -539,8 +584,8 @@
     function renderTitle() {
       const copy = t();
       const logoBlock = state.lang === 'en'
-        ? `<div class="logo-wrap"><img class="logo" src="${LOGO_DATA}" alt="The Melon Bread logo"></div>`
-        : `<div class="logo-wrap"><div><div class="ja-logo-text">めろんぱん</div><div style="color:var(--muted);text-align:center;font-size:13px;">ゆるUI edition</div></div></div>`;
+        ? `<div class="logo-wrap"><img class="logo" src="${LOGO_EN}" alt="The Melon Bread logo"></div>`
+        : `<div class="logo-wrap"><img class="logo" src="${LOGO_JA}" alt="めろんぱん ロゴ"></div>`;
 
       screenEl.innerHTML = `
         <div class="hero">
