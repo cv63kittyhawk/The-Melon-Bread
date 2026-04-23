@@ -87,7 +87,7 @@ Success often gets explained as genius after the fact.
 
 📄 License
 
-MIT (or choose your preferred license)
+MIT
 
 ⸻
 
